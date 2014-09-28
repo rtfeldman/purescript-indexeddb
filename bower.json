@@ -1,0 +1,29 @@
+{
+  "name": "idbstream",
+  "version": "0.0.1",
+  "homepage": "https://github.com/rtfeldman/idbstream",
+  "authors": [
+    "Richard Feldman <richard.t.feldman@gmail.com>"
+  ],
+  "description": "Streaming interface to IndexedDB for PureScript.",
+  "main": "IDBStream.purs",
+  "moduleType": [
+    "es6"
+  ],
+  "keywords": [
+    "purescript",
+    "indexeddb"
+  ],
+  "license": "Apache2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "purescript-either": "~0.1.3",
+    "purescript-transformers": "~0.2.1"
+  }
+}
