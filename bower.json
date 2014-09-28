@@ -1,7 +1,7 @@
 {
-  "name": "idbstream",
+  "name": "purescript-indexeddb",
   "version": "0.0.1",
-  "homepage": "https://github.com/rtfeldman/idbstream",
+  "homepage": "https://github.com/rtfeldman/purescript-indexeddb",
   "authors": [
     "Richard Feldman <richard.t.feldman@gmail.com>"
   ],

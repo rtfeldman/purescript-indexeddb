@@ -1,5 +1,5 @@
 {
-  "name": "idbstream",
+  "name": "purescript-indexeddb",
   "version": "0.0.1",
   "description": "Streaming interface to IndexedDB for PureScript.",
   "main": "Gruntfile.coffee",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rtfeldman/idbstream.git"
+    "url": "https://github.com/rtfeldman/purescript-indexeddb.git"
   },
   "keywords": [
     "purescript",
@@ -21,7 +21,7 @@
   "author": "Richard Feldman",
   "license": "Apache2",
   "bugs": {
-    "url": "https://github.com/rtfeldman/idbstream/issues"
+    "url": "https://github.com/rtfeldman/purescript-indexeddb/issues"
   },
-  "homepage": "https://github.com/rtfeldman/idbstream"
+  "homepage": "https://github.com/rtfeldman/purescript-indexeddb"
 }
