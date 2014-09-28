@@ -20,15 +20,17 @@ data IDBOpenResult =
     IDBFailure       IDBError
   | IDBUpgradeNeeded IDBConnection IDBTransaction
 
+data StorageType = Temporary | Permanent
+
 foreign import openIDBNative
   """
-    function openIDBNative(dbName, version, onSuccess, onFailure, onUpgradeNeeded) {
+    function openIDBNative(dbName, version, storageType, onSuccess, onFailure, onUpgradeNeeded) {
       return function() {
         if (indexedDB) {
           var request;
 
           try {
-            request = indexedDB.open(dbName, version);
+            request = indexedDB.open(dbName, {version: version, storage: storageType});
           } catch (exception) {
             onFailure(exception);
           }
@@ -50,22 +52,21 @@ foreign import openIDBNative
       };
     }
   """
-  :: forall eff. Fn5 IDBName IDBVersion
+  :: forall eff. Fn6 IDBName IDBVersion StorageType -- TODO marshal StorageType correctly
     (IDBConnection -> Eff (idb :: IDB | eff) Unit)
     -- TODO convert these to useful types; upgrade needed and error are completely different!
     (IDBOpenResult -> Eff (idb :: IDB | eff) Unit)
     (IDBOpenResult -> Eff (idb :: IDB | eff) Unit)
     (                 Eff (idb :: IDB | eff) Unit)
 
-openIDB :: forall eff. IDBName -> IDBVersion ->
+openIDB :: forall eff. IDBName -> IDBVersion -> StorageType ->
   (Either IDBOpenResult IDBConnection -> Eff (idb :: IDB | eff) Unit) -> Eff (idb :: IDB | eff) Unit
-openIDB name version continuation = runFn5 openIDBNative
-  name version
+openIDB name version storageType continuation = runFn6 openIDBNative
+  name version storageType
   (continuation <<< Right)
   (continuation <<< Left)
   (continuation <<< Left)
 
-openIDBCont :: forall eff. IDBName -> IDBVersion ->
+openIDBCont :: forall eff. IDBName -> IDBVersion -> StorageType ->
   C eff (Either IDBOpenResult IDBConnection)
-
-openIDBCont name version = ContT $ openIDB name version
+openIDBCont name version storageType = ContT $ openIDB name version storageType
