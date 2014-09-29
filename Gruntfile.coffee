@@ -4,6 +4,22 @@ module.exports = (grunt) ->
   grunt.initConfig
     srcFiles: ["src/**/*.purs", "bower_components/**/src/**/*.purs", "example/**/*.purs"]
 
+    clean: ["dist"]
+
+    copy:
+      demo:
+        src: "example/demo.html"
+        dest: "dist/index.html"
+
+    watch:
+      html:
+        files: ["example/*.html"]
+        tasks: ["copy:demo"]
+
+      purs:
+        files: ["<%=srcFiles%>"]
+        tasks: ["psc:all"]
+
     psc:
       options:
         main: "Demo"
@@ -23,5 +39,12 @@ module.exports = (grunt) ->
 
     dotPsci: ["<%=srcFiles%>"]
 
-  grunt.loadNpmTasks "grunt-purescript"
-  grunt.registerTask "default", ["psc:all", "dotPsci", "connect"]
+    connect:
+      static:
+       options:
+         port: 1337,
+         base: 'dist'
+
+  ["grunt-purescript", "grunt-contrib-connect", "grunt-contrib-clean", "grunt-contrib-copy", "grunt-contrib-watch"
+  ].forEach (module) -> grunt.loadNpmTasks module
+  grunt.registerTask "default", ["clean", "psc:all", "dotPsci", "copy", "connect", "watch"]
