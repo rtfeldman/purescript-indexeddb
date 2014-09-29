@@ -1,4 +1,4 @@
-module IDBStream where
+module IndexedDB where
 
 import Data.Either
 import Data.Function

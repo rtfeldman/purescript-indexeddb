@@ -6,8 +6,8 @@ module.exports = (grunt) ->
 
     pscMake:
       options:
-        main: "Chapter2"
-        modules: ["Chapter2"]
+        main: "Demo"
+        modules: ["IndexedDB"]
 
       all:
         src: ["<%=srcFiles%>"]
