@@ -13,8 +13,8 @@ foreign import data IDBConnection  :: *
 foreign import data IDBTransaction :: *
 foreign import data IDBError       :: *
 
-type M eff = Eff (idb :: IDB | eff)
-type C eff = ContT Unit (M eff)
+type WithIDB eff = Eff (idb :: IDB | eff)
+type WithIDBCont eff = ContT Unit (WithIDB eff)
 
 data IDBOpenResult =
     IDBFailure       IDBError
@@ -60,7 +60,8 @@ foreign import openIDBNative
     (                 Eff (idb :: IDB | eff) Unit)
 
 openIDB :: forall eff. IDBName -> IDBVersion -> StorageType ->
-  (Either IDBOpenResult IDBConnection -> Eff (idb :: IDB | eff) Unit) -> Eff (idb :: IDB | eff) Unit
+  (Either IDBOpenResult IDBConnection -> WithIDB eff Unit) ->
+  WithIDB eff Unit
 openIDB name version storageType continuation = runFn6 openIDBNative
   name version storageType
   (continuation <<< Right)
@@ -68,5 +69,5 @@ openIDB name version storageType continuation = runFn6 openIDBNative
   (continuation <<< Left)
 
 openIDBCont :: forall eff. IDBName -> IDBVersion -> StorageType ->
-  C eff (Either IDBOpenResult IDBConnection)
+  WithIDBCont eff (Either IDBOpenResult IDBConnection)
 openIDBCont name version storageType = ContT $ openIDB name version storageType
