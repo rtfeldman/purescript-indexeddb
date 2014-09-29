@@ -24,6 +24,8 @@
   ],
   "dependencies": {
     "purescript-either": "~0.1.3",
-    "purescript-transformers": "~0.2.1"
+    "purescript-transformers": "~0.2.1",
+    "purescript-dom": "~0.1.1",
+    "purescript-foreign": "~0.2.0"
   }
 }
